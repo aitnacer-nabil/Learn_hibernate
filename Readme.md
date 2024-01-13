@@ -116,3 +116,44 @@ transaction.
 
     * Correspond à un état où l'entité est marquée pour suppression.
   * Se produit lorsque em.remove() est utilisé pour programmer la suppression d'une entité lors de la prochaine transaction
+
+## em.persist()
+on indique au gestionnaire d'entités (EntityManager) de prendre en charge l'entité spécifiée et de la considérer comme devant être persistée. Cependant, il est important de noter que cette méthode ne déclenche pas immédiatement l'insertion dans la base de données ; elle prépare plutôt l'entité à être persistée lorsqu'une transaction est confirmée.
+`Utilisateur utilisateur = new Utilisateur();
+// Initialiser les propriétés de l'utilisateur...
+
+EntityManager em = // obtenir le gestionnaire d'entités
+em.getTransaction().begin();
+
+// Utilisation de persist pour rendre l'entité gérée
+em.persist(utilisateur);
+
+em.getTransaction().commit();`
+Dans cet exemple, utilisateur est rendu géré/persisté dans le contexte de persistance après l'appel à em.persist(). L'enregistrement effectif dans la base de données se produit lors de l'appel à em.getTransaction().commit().
+
+## find(class Entity,primary id)
+in first time to retrieve object  is gonna   make hit immediately to database and put retrieve record to 
+persistent context
+Elle est utilisée pour récupérer une entité à partir de la base de données en fonction de sa classe et de sa clé primaire (identifiant). La méthode find renvoie l'entité correspondante si elle existe, sinon elle renvoie null.
+
+
+## getReference()
+only when u want information about an object or entity it'll make a  hit to database
+La méthode getReference est également une méthode de l'interface EntityManager et est utilisée pour obtenir une référence (proxy) à une entité à partir de la base de données. Contrairement à find, getReference ne déclenche pas immédiatement une requête à la base de données. Elle renvoie plutôt une référence "proxy" à l'entité, et la requête effective à la base de données n'est déclenchée que lorsque des méthodes spécifiques sont appelées sur cette référence. Si l'entité n'existe pas en base de données, une exception peut être levée lors de l'accès aux propriétés de l'entité.
+
+### Differences :
+* La principale différence réside dans le moment où la requête est effectuée : find effectue une requête immédiatement, tandis que getReference retarde la requête jusqu'à ce qu'une méthode sur la référence soit appelée.
+* find renvoie l'entité elle-même ou null si elle n'est pas trouvée, tandis que getReference renvoie une référence "proxy" à l'entité.
+* find peut retourner null pour une entité inexistante, tandis que getReference peut provoquer une exception lorsqu'une méthode est appelée sur une référence proxy pour une entité inexistante.
+
+
+# merge
+![merge_problem.png](images%2Fmerge_problem.png)
+
+Le problème avec la fusion est que lorsqu'une entité est détachée et qu'il y a une autre entité dans le contexte de persistance avec la même clé primaire, un conflit se produira si nous effectuons une fusion.
+La fusion prend une copie de l'état modifié de l'entité et modifie l'entité à l'intérieur du contexte de persistance. Toutes les modifications qui se produisent en dehors du contexte de persistance, telles que la détacher, ne seront pas enregistrées dans la base de données ou le contexte de persistance.
+merge can do insert and update
+# remove
+Quand Hibernate voit une entité avec une clé primaire nulle, il sait qu'elle n'existe pas dans la base de données. Ainsi, il n'effectuera pas de suppression
+
+

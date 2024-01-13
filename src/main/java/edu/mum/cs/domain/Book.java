@@ -7,20 +7,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+@Data
 @Builder
-@Getter
-@Setter
-@ToString
 @AllArgsConstructor
-public class Person {
+@NoArgsConstructor
+@Entity
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String lastName;
+    private String isbn;
+    private String title;
 
-    public Person() {
 
-    }
 }
