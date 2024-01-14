@@ -156,4 +156,36 @@ merge can do insert and update
 # remove
 Quand Hibernate voit une entité avec une clé primaire nulle, il sait qu'elle n'existe pas dans la base de données. Ainsi, il n'effectuera pas de suppression
 
+# --------------------------------------------------------------------
 
+## @ManyToOne :
+
+Utilisé pour définir une relation many-to-one entre deux entités dans Hibernate. Indique qu'une entité est l'entité propriétaire de la relation.
+
+## @OnToOne
+
+Utilisé pour définir une relation one-to-one entre deux entités dans Hibernate.
+  * uni :
+    Hibernate crée une clé étrangère à l'intérieur de l'entité parente qui a l'annotation @OneToOne.
+    
+## @OneToMany :
+
+Utilisé pour définir une relation one-to-many entre deux entités dans Hibernate. Indique qu'une entité a une relation avec plusieurs entités d'une autre classe.
+ * Unidirectional :
+        use joinTable by default
+        Utilisé pour décrire une relation OneToMany dans Hibernate où la navigation se fait dans un seul sens,
+        c'est-à-dire que l'entité possédant la relation peut accéder à l'entité associée, mais pas l'inverse.
+        Cette approche signifie qu'une entité est consciente de l'autre, mais l'autre entité ne connaît pas la première.
+        unique column
+ * Bidirectionnel :
+
+      Utilisé pour décrire une relation bidirectionnelle entre deux entités dans Hibernate. 
+      Dans ce type de relation, les deux entités sont conscientes 
+      l'une de l'autre et peuvent naviguer dans les deux sens.
+      Cela signifie que chaque entité peut accéder à l'autre dans le cadre de la relation.
+
+## @JoinColumn :
+
+Utilisé pour spécifier la colonne de jointure dans une relation de base de données entre deux entités dans Hibernate. Cette annotation permet de personnaliser les propriétés de la colonne de jointure.
+
+## @JoinTable : Utilisé pour spécifier une table intermédiaire (table de jointure)
